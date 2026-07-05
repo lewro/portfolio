@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roman Leinwather</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="description" content="Product design at the intersection of business, technology, and people. Twenty years shaping digital products for companies of every scale.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial,sans-serif' font-size='26' font-weight='600' fill='%23f9f9f9' text-anchor='middle'%3ERL%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Roman Leinwather — Product Designer">
+  <meta property="og:description" content="Product design at the intersection of business, technology, and people. Twenty years shaping digital products for companies of every scale.">
+  <!-- og:image must be an absolute URL once deployed, e.g. https://yourdomain.com/assets/og.png -->
+  <meta property="og:image" content="assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    /* apply saved theme before first paint to avoid a flash */
+    try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f9f9f9;
+      --text: #000000;
+      --muted: #666666;
+      --faint: #999999;
+      --nav-bg: rgba(255, 255, 255, 0.75);
+      --line: #c9c9c9;
+      --toggle-track: #e4e4e4;
+      --toggle-knob: #ffffff;
+      --toggle-icon: #666666;
+      --imac-shadow: rgba(0, 0, 0, 0.22);
+    }
+
+    :root.dark {
+      --bg: #111111;
+      --text: #f5f5f5;
+      --muted: #a3a3a3;
+      --faint: #6e6e6e;
+      --nav-bg: rgba(17, 17, 17, 0.75);
+      --line: #4d4d4d;
+      --toggle-track: #3f3f3f;
+      --toggle-knob: #161616;
+      --toggle-icon: #e0e0e0;
+      --imac-shadow: rgba(0, 0, 0, 0.6);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Instrument Sans', sans-serif;
+      font-variation-settings: "wdth" 100;
+      font-weight: 400;
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* One shared container: 1216px content + 112px side margins (1440 design frame) */
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: 112px;
+      padding-right: 112px;
+    }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-top: 32px;
+      padding-bottom: 16px;
+      z-index: 10;
+      background: transparent;
+      transition:
+        background-color 0.35s ease,
+        padding 0.35s ease,
+        backdrop-filter 0.35s ease;
+    }
+
+    .nav.scrolled {
+      padding-top: 16px;
+      background: var(--nav-bg);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.25s ease, color 0.4s ease;
+    }
+
+    .nav a:hover {
+      opacity: 0.5;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    /* ---------- HERO / ABOUT ---------- */
+    .screen {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .screen .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 14px;
+      line-height: normal;
+      color: var(--faint);
+      width: 100%;
+      transition: color 0.4s ease;
+    }
+
+    .heading {
+      font-size: 28px;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      width: 100%;
+      transition: color 0.4s ease;
+    }
+
+    .heading .muted {
+      color: var(--muted);
+    }
+
+    .heading--about {
+      max-width: 941px;
+    }
+
+    .body-block {
+      padding-top: 16px;
+    }
+
+    .body-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 544.5px;
+      transition: color 0.4s ease;
+    }
+
+    .body-text p + p {
+      margin-top: 16px;
+    }
+
+    /* ---------- CASE STUDY ---------- */
+    .case {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      align-items: flex-start;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .case-top {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    /* ---------- iMAC ---------- */
+    .imac {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1216 / 1007.13;
+    }
+
+    /* diffuse contact shadow grounding the monitor */
+    .imac::before {
+      content: '';
+      position: absolute;
+      left: 22%;
+      right: 22%;
+      bottom: -1%;
+      height: 3%;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, var(--imac-shadow), transparent 70%);
+      filter: blur(8px);
+      z-index: 0;
+    }
+
+    .imac-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    .imac-frame--dark {
+      opacity: 0;
+    }
+
+    :root.dark .imac-frame--dark {
+      opacity: 1;
+    }
+
+    /* Screen window: x 42.98, y 46.88, 1130.036 x 635.989 within 1216 x 1007.13 */
+    .imac-screen {
+      position: absolute;
+      left: 3.5346%;
+      top: 4.6548%;
+      width: 92.9306%;
+      height: 63.1487%;
+      background: #f5f5f5;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      z-index: 2;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    }
+
+    .imac-screen::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .imac-screen::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
+    .imac-screen img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .imac-screen img + img {
+      margin-top: 80px;
+    }
+
+    /* ---------- MOCKUP NUMBERS (right side of the screen) ---------- */
+    .imac-nav {
+      position: absolute;
+      /* screen area: x 3.5346% - 96.4654%, y 4.6548% - 67.8035% */
+      right: 5.5%;
+      top: 36.23%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.72);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      padding: 8px 4px;
+      border-radius: 999px;
+    }
+
+    .imac-num {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1;
+      color: #999;
+      padding: 4px 7px;
+      transition: color 0.25s ease;
+    }
+
+    .imac-num:hover,
+    .imac-num.active {
+      color: #000;
+    }
+
+    /* ---------- CASE META ROW ---------- */
+    .case-meta {
+      font-size: 14px;
+      line-height: normal;
+      color: var(--faint);
+      padding-top: 8px;
+      transition: color 0.4s ease;
+    }
+
+    .case-meta span + span::before {
+      content: '\00B7';
+      margin: 0 10px;
+    }
+
+    .case-meta a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .case-meta a:hover {
+      color: var(--text);
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.25s ease, color 0.4s ease;
+    }
+
+    .contact-links a:hover {
+      opacity: 0.6;
+    }
+
+    .footer-note {
+      position: absolute;
+      bottom: 32px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--faint);
+      transition: color 0.4s ease;
+    }
+
+    /* ---------- CHALLENGE / APPROACH / OUTCOME ---------- */
+    .case-details {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      padding-top: 32px;
+      width: 100%;
+    }
+
+    .case-detail {
+      flex: 1 0 0;
+      min-width: 1px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--d, 0s);
+      will-change: opacity, transform;
+    }
+
+    [data-reveal].in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* the iMac floats up a touch more and settles */
+    .imac[data-reveal] {
+      transform: translateY(56px) scale(0.975);
+      transition-duration: 1.1s;
+    }
+
+    .imac[data-reveal].in {
+      transform: none;
+    }
+
+    /* hero heading: word-by-word masked rise */
+    .w {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+
+    .w > span {
+      display: inline-block;
+      transform: translateY(110%);
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--d, 0s);
+    }
+
+    .words-in .w > span {
+      transform: none;
+    }
+
+    /* ---------- THEME TOGGLE ---------- */
+    .theme-toggle {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      border: none;
+      padding: 0;
+      background: var(--toggle-track);
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--toggle-knob);
+      color: var(--toggle-icon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease;
+    }
+
+    :root.dark .toggle-knob {
+      transform: translateX(20px);
+    }
+
+    .toggle-knob svg {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      transition: opacity 0.25s ease, transform 0.3s ease;
+    }
+
+    .icon-moon {
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+
+    :root.dark .icon-sun {
+      opacity: 0;
+      transform: rotate(45deg);
+    }
+
+    :root.dark .icon-moon {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---------- SECTION RAIL ---------- */
+    .rail {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: 24px;
+      z-index: 9;
+    }
+
+    .rail-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .rail-line {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--line);
+      transition: background-color 0.25s ease, width 0.25s ease;
+    }
+
+    .rail-item:hover .rail-line,
+    .rail-item.active .rail-line {
+      background: var(--text);
+    }
+
+    .rail-item.active .rail-line {
+      width: 32px;
+    }
+
+    .rail-label {
+      font-size: 12px;
+      line-height: 1;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+
+    .rail-item:hover .rail-label {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .container {
+        padding-left: 64px;
+        padding-right: 64px;
+      }
+
+      .rail {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+
+      .case-details {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .case-detail {
+        flex: none;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal],
+      .w > span {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#home">Roman Leinwather</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+        <a href="cv.html">CV</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <span class="toggle-knob">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="screen" id="home" data-nav="Home">
+    <div class="container">
+      <div class="content">
+        <p class="eyebrow" data-reveal>Since 2006</p>
+        <p class="heading" id="hero-heading">Product design <span class="muted">at the intersection<br>of business, technology, and people.</span></p>
+        <div class="body-block" data-reveal>
+          <p class="body-text">Twenty years shaping digital products for companies of every scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="screen" id="about" data-nav="About">
+    <div class="container">
+      <div class="content">
+        <p class="eyebrow" data-reveal>About</p>
+        <p class="heading heading--about" data-reveal>For nearly two decades, I&rsquo;ve been designing digital products, interfaces, and systems for organizations including Google, Toptal, NATO, 10 Downing Street, ITV, AVG, Est&eacute;e Lauder, and Qustodio.</p>
+        <div class="body-block" data-reveal>
+          <div class="body-text">
+            <p>I&rsquo;m a Product Designer based in Prague, Czech Republic, with Slovak, Hungarian, and German roots. I studied design and programming at Oxford Computer College and City University London.</p>
+            <p>Alongside client work, I&rsquo;ve built startups and launched products of my own, which has given me a perspective that extends beyond design into strategy, technology, and execution.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: TOPTAL RESUME -->
+  <section id="portfolio" data-nav="Toptal Resume">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Toptal Resume</p>
+        <p class="body-text" data-reveal>An AI-assisted resume builder that guides professionals step by step &mdash; from work experience to final review &mdash; with personalized, AI-generated suggestions along the way.</p>
+        <p class="case-meta" data-reveal><span>2026</span><span>Product Designer</span><span>Web App</span><span>Toptal</span><span><a href="https://www.toptal.com/resume" target="_blank" rel="noopener">toptal.com/resume</a></span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/resume-1.jpg" width="1458" height="1006" alt="Toptal Resume — work experience step" decoding="async">
+          <img src="assets/resume-2.jpg" width="2051" height="1020" alt="Toptal Resume — step detail" loading="lazy" decoding="async">
+          <img src="assets/resume-3.jpg" width="1458" height="1532" alt="Toptal Resume — skills and suggestions" loading="lazy" decoding="async">
+          <img src="assets/resume-4.jpg" width="1458" height="870" alt="Toptal Resume — summary" loading="lazy" decoding="async">
+          <img src="assets/resume-5.jpg" width="1440" height="724" alt="Toptal Resume — success state" loading="lazy" decoding="async">
+          <img src="assets/resume-6.jpg" width="1440" height="836" alt="Toptal Resume — review" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Writing a strong resume is hard even for experienced professionals. Users struggled with what to include, how to phrase achievements, and how to keep the document focused and concise.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I designed a guided, step-by-step flow that breaks the resume into manageable sections, pairing each entry with AI-recommended bullets and a live preview so users always see the result of their choices.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A self-serve product that turns a blank page into a polished, recruiter-ready resume in minutes, while keeping the user in full control of tone and content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: AWRA -->
+  <section data-nav="Awra">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Awra</p>
+        <p class="body-text" data-reveal>A personal health-intelligence app that turns raw tracking data &mdash; sleep, nutrition, movement, and mood &mdash; into insights people can actually understand and act on.</p>
+        <p class="case-meta" data-reveal><span>2026</span><span>Founder &amp; Designer</span><span>iOS &amp; Android</span><span>Personal Project</span><span><a href="https://awra.info" target="_blank" rel="noopener">awra.info</a></span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/awra-1.jpg" width="2176" height="1280" alt="Awra — health dashboard" loading="lazy" decoding="async">
+          <img src="assets/awra-2.jpg" width="2200" height="1238" alt="Awra — habits" loading="lazy" decoding="async">
+          <img src="assets/awra-3.jpg" width="2200" height="1238" alt="Awra — insights" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Health apps collect endless data but rarely explain it. Awra&rsquo;s premise: tracking was never the problem &mdash; understanding it was.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I designed the product around a single Awra Score that blends nutrition, sleep, hydration, and movement, with plain-language insights and habit loops instead of charts and jargon.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A calm, focused app where users see their overall balance at a glance, understand what&rsquo;s driving it, and build habits that actually matter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: OPERATIONALISE -->
+  <section data-nav="Operationalise">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Operationalise</p>
+        <p class="body-text" data-reveal>An AI-powered planning tool that turns high-level business goals into structured, step-by-step operational workflows with clear ownership, timelines, and meeting schedules.</p>
+        <p class="case-meta" data-reveal><span>2026</span><span>Product Designer</span><span>Web App</span><span>Toptal</span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/ops-1.jpg" width="1440" height="813" alt="Operationalise — quarterly planning workflow" loading="lazy" decoding="async">
+          <img src="assets/ops-2.jpg" width="1440" height="1175" alt="Operationalise — workflow detail" loading="lazy" decoding="async">
+          <img src="assets/ops-3.jpg" width="1440" height="856" alt="Operationalise — meeting grid" loading="lazy" decoding="async">
+          <img src="assets/ops-4.jpg" width="1440" height="1123" alt="Operationalise — step configuration" loading="lazy" decoding="async">
+          <img src="assets/ops-5.jpg" width="1440" height="1048" alt="Operationalise — participants" loading="lazy" decoding="async">
+          <img src="assets/ops-6.jpg" width="1440" height="856" alt="Operationalise — calendar" loading="lazy" decoding="async">
+          <img src="assets/ops-7.jpg" width="1440" height="825" alt="Operationalise — schedule" loading="lazy" decoding="async">
+          <img src="assets/ops-8.jpg" width="1440" height="825" alt="Operationalise — overview" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Quarterly planning in large organizations happens across silos &mdash; goals, OKRs, and meetings live in disconnected documents, and nobody sees the process end to end.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I designed a visual workflow builder that maps each planning step across functional swimlanes, with granular configuration of owners, inputs, outputs, and participants &mdash; and generates the meeting schedule automatically.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A single, transparent view of the entire planning cycle that replaces scattered spreadsheets and makes responsibilities and dependencies explicit for every team involved.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: TOPTAL AI -->
+  <section data-nav="Toptal AI">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Toptal AI</p>
+        <p class="body-text" data-reveal>A family of marketing pages for Toptal&rsquo;s AI services &mdash; presenting the full AI stack, from strategy and talent to platforms and managed services, for enterprise and frontier clients.</p>
+        <p class="case-meta" data-reveal><span>2026</span><span>Product Designer</span><span>Marketing Site</span><span>Toptal</span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/ai-1.jpg" width="1440" height="13608" alt="Toptal AI — main landing page" loading="lazy" decoding="async">
+          <img src="assets/ai-2.jpg" width="1530" height="4096" alt="Toptal AI — case studies" loading="lazy" decoding="async">
+          <img src="assets/ai-3.jpg" width="1642" height="3741" alt="Toptal AI — client stories" loading="lazy" decoding="async">
+          <img src="assets/ai-4.jpg" width="1440" height="16012" alt="Toptal AI — healthcare industry page" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Toptal&rsquo;s AI offering spans strategy, talent, platforms, and data services. Communicating such a broad portfolio without overwhelming visitors was the core design problem.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I built a clear visual language around the layered &ldquo;AI Stack&rdquo; &mdash; an anchor illustration reused across pages &mdash; and structured each page from a high-level promise down to concrete services, case studies, and proof points.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A scalable page system covering the main site, industry variants, and case studies, giving sales a consistent story for every audience from Fortune 500 enterprises to individuals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: TOPTAL EXTENDED -->
+  <section data-nav="Toptal Extended">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Toptal Extended</p>
+        <p class="body-text" data-reveal>A landing page for Toptal Extended &mdash; talent on demand for multidisciplinary software teams and large groups of operational specialists, ready to deploy at scale.</p>
+        <p class="case-meta" data-reveal><span>2024</span><span>Product Designer</span><span>Landing Page</span><span>Toptal</span><span><a href="https://www.toptal.com/extended" target="_blank" rel="noopener">toptal.com/extended</a></span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/extended-1.jpg" width="1440" height="7200" alt="Toptal Extended — landing page" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Toptal is known for individual elite freelancers. Extended sells something different &mdash; whole teams at competitive prices &mdash; and the page had to reposition the brand without diluting it.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I led with the scale story &mdash; teams, groups, and verified talent profiles &mdash; supported by the screening process, engagement models, and logos of brands already hiring this way.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A focused page that explains the new offering in one scroll and gives visitors a single, clear action: hire talent now.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: TOPTAL COACHING -->
+  <section data-nav="Toptal Coaching">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Toptal Coaching</p>
+        <p class="body-text" data-reveal>A marketplace and landing experience for Toptal&rsquo;s executive coaching services, connecting leaders with rigorously vetted, world-class coaches.</p>
+        <p class="case-meta" data-reveal><span>2025</span><span>Product Designer</span><span>Marketing Site</span><span>Toptal</span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/coaching-1.jpg" width="1157" height="4096" alt="Toptal Coaching — landing page" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Coaching is a trust-driven purchase. The page needed to make an intangible service feel concrete and credible enough for executives to schedule a call.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I put the coaches themselves at the center &mdash; real people, verified credentials, and the brands they&rsquo;ve worked with &mdash; and kept the path to scheduling a call short and prominent.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A page that presents coaching with the same rigor as Toptal&rsquo;s talent network and converts interest into scheduled conversations with matched coaches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO: STAFFING.COM -->
+  <section data-nav="Staffing.com">
+    <div class="container case">
+      <div class="case-top">
+        <p class="eyebrow" data-reveal>Case Study</p>
+        <p class="heading" data-reveal>Staffing.com</p>
+        <p class="body-text" data-reveal>A content platform by Toptal where world-class executives discuss the future of work &mdash; podcasts, insights, and analysis on the talent economy.</p>
+        <p class="case-meta" data-reveal><span>2024</span><span>Product Designer</span><span>Editorial Platform</span><span>Toptal</span><span><a href="https://www.staffing.com/" target="_blank" rel="noopener">staffing.com</a></span></p>
+      </div>
+      <div class="imac" data-reveal>
+        <img class="imac-frame" src="assets/imac.svg" alt="">
+        <img class="imac-frame imac-frame--dark" src="assets/imac-dark.svg" alt="">
+        <div class="imac-screen">
+          <img src="assets/staffing-1.jpg" width="1350" height="4096" alt="Staffing.com — editorial platform" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="case-details">
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Challenge</p>
+          <p class="body-text">Staffing.com needed to feel like an editorial publication, not a corporate blog &mdash; a place where Chief People Officers of major brands would want to appear.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Approach</p>
+          <p class="body-text">I designed an editorial system built around people: podcast episodes, expert profiles, and peer-reviewed articles, each format with a clear hierarchy and its own rhythm on the page.</p>
+        </div>
+        <div class="case-detail" data-reveal>
+          <p class="eyebrow">Outcome</p>
+          <p class="body-text">A publication-grade experience that positions Toptal at the center of the future-of-work conversation and showcases executives from Verizon, Amazon, Kroger, and beyond.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="screen" id="contact" data-nav="Contact">
+    <div class="container">
+      <div class="content">
+        <p class="eyebrow" data-reveal>Contact</p>
+        <p class="heading" data-reveal>Let&rsquo;s talk. <span class="muted">I&rsquo;m always happy to discuss new products, ideas, and opportunities.</span></p>
+        <div class="body-block" data-reveal>
+          <p class="body-text contact-links">
+            <a href="mailto:roman.leinwather@gmail.com">roman.leinwather@gmail.com</a>
+            <a href="https://www.linkedin.com/in/lewro/" target="_blank" rel="noopener">LinkedIn</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="footer-note">&copy; 2026 Roman Leinwather</p>
+  </section>
+
+  <script>
+    (function () {
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------- Sticky nav: solid bar once scrolled ---------- */
+      var nav = document.querySelector('.nav');
+      function updateNav() {
+        nav.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 8);
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+
+      /* ---------- Dark mode toggle ---------- */
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        var dark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+
+      /* ---------- Smooth jump links (JS-driven, works everywhere) ---------- */
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      var scrollToken = 0;
+      function smoothScrollTo(targetY, duration) {
+        var startY = window.scrollY || window.pageYOffset;
+        var diff = targetY - startY;
+        var token = ++scrollToken;
+        if (reducedMotion || Math.abs(diff) < 2) {
+          window.scrollTo(0, targetY);
+          return;
+        }
+        var done = false;
+        var start;
+        function step(ts) {
+          if (token !== scrollToken) return;
+          if (start === undefined) start = ts;
+          var t = Math.min((ts - start) / duration, 1);
+          window.scrollTo(0, startY + diff * easeInOutCubic(t));
+          if (t < 1) requestAnimationFrame(step);
+          else done = true;
+        }
+        requestAnimationFrame(step);
+        /* if frames get throttled (hidden tab, battery saver), still land on target */
+        setTimeout(function () {
+          if (!done && token === scrollToken) window.scrollTo(0, targetY);
+        }, duration + 150);
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          smoothScrollTo(target.offsetTop, 900);
+        });
+      });
+
+      /* ---------- Section rail (Notion-style side navigation) ---------- */
+      var navSections = Array.prototype.slice.call(document.querySelectorAll('section[data-nav]'));
+      var rail = document.createElement('nav');
+      rail.className = 'rail';
+      rail.setAttribute('aria-label', 'Sections');
+      var railItems = navSections.map(function (sec) {
+        var item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'rail-item';
+        var label = document.createElement('span');
+        label.className = 'rail-label';
+        label.textContent = sec.getAttribute('data-nav');
+        var line = document.createElement('span');
+        line.className = 'rail-line';
+        item.appendChild(label);
+        item.appendChild(line);
+        item.addEventListener('click', function () {
+          smoothScrollTo(sec.offsetTop, 900);
+        });
+        rail.appendChild(item);
+        return item;
+      });
+      document.body.appendChild(rail);
+
+      function updateRail() {
+        var pos = (window.scrollY || window.pageYOffset) + window.innerHeight * 0.4;
+        var active = 0;
+        navSections.forEach(function (sec, i) {
+          if (sec.offsetTop <= pos) active = i;
+        });
+        railItems.forEach(function (item, i) {
+          item.classList.toggle('active', i === active);
+        });
+      }
+      window.addEventListener('scroll', updateRail, { passive: true });
+      updateRail();
+
+      /* ---------- Hero heading: word-by-word masked rise ---------- */
+      var heroHeading = document.getElementById('hero-heading');
+      var wordDelay = 0;
+      function splitWords(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+          if (child.nodeType === Node.TEXT_NODE) {
+            var frag = document.createDocumentFragment();
+            child.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+                return;
+              }
+              var mask = document.createElement('span');
+              mask.className = 'w';
+              var word = document.createElement('span');
+              word.textContent = part;
+              word.style.setProperty('--d', (0.15 + wordDelay * 0.05) + 's');
+              wordDelay++;
+              mask.appendChild(word);
+              frag.appendChild(mask);
+            });
+            node.replaceChild(frag, child);
+          } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
+            splitWords(child);
+          }
+        });
+      }
+      splitWords(heroHeading);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          heroHeading.classList.add('words-in');
+        });
+      });
+
+      /* ---------- Reveal on scroll ---------- */
+      document.querySelectorAll('section').forEach(function (section) {
+        section.querySelectorAll('[data-reveal]').forEach(function (el, i) {
+          el.style.setProperty('--d', (i * 0.09) + 's');
+        });
+      });
+
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        revealObserver.observe(el);
+      });
+
+      /* ---------- iMac screens: glide from mockup to mockup when in view ---------- */
+      function playDemo(screenEl) {
+        var max = screenEl.scrollHeight - screenEl.clientHeight;
+        if (max <= 0) return;
+
+        /* one stop at the top of each mockup */
+        var stops = [];
+        screenEl.querySelectorAll('img').forEach(function (img) {
+          var top = Math.min(img.offsetTop, max);
+          if (!stops.length || top - stops[stops.length - 1] > 40) stops.push(top);
+        });
+        /* single tall mockup: glide down screen by screen instead */
+        if (stops.length < 2) {
+          var step = screenEl.clientHeight * 0.85;
+          for (var s = step; s <= Math.min(max, step * 3) + 1; s += step) {
+            stops.push(Math.min(Math.round(s), max));
+          }
+        }
+        stops = stops.filter(function (v, i) { return i === 0 ? v > 0 : v > stops[i - 1]; });
+        if (!stops.length) return;
+
+        var cancelled = false;
+        function cancel() { cancelled = true; }
+        screenEl._cancelDemo = cancel;
+        ['wheel', 'touchstart', 'pointerdown'].forEach(function (ev) {
+          screenEl.addEventListener(ev, cancel, { passive: true, once: true });
+        });
+
+        function tween(from, to, duration, done) {
+          var start;
+          function step(ts) {
+            if (cancelled) return;
+            if (start === undefined) start = ts;
+            var t = Math.min((ts - start) / duration, 1);
+            screenEl.scrollTop = from + (to - from) * easeInOutCubic(t);
+            if (t < 1) requestAnimationFrame(step);
+            else if (done) done();
+          }
+          requestAnimationFrame(step);
+        }
+
+        /* constant reading speed: duration scales with distance */
+        function glideDuration(dist) {
+          return Math.max(900, Math.min(3200, dist / 0.45));
+        }
+
+        var idx = 0;
+        function next() {
+          if (cancelled) return;
+          if (idx >= stops.length) {
+            /* rest, then glide back to the first mockup */
+            setTimeout(function () {
+              if (!cancelled) tween(screenEl.scrollTop, 0, 2400);
+            }, 900);
+            return;
+          }
+          var target = stops[idx++];
+          var from = screenEl.scrollTop;
+          tween(from, target, glideDuration(Math.abs(target - from)), function () {
+            setTimeout(next, 1100); /* pause on each mockup */
+          });
+        }
+        setTimeout(next, 200);
+      }
+
+      /* ---------- Mockup numbers: jump between mockups inside a screen ---------- */
+      document.querySelectorAll('.imac').forEach(function (imac) {
+        var screenEl = imac.querySelector('.imac-screen');
+        var imgs = Array.prototype.slice.call(screenEl.querySelectorAll('img'));
+        if (imgs.length < 2) return;
+
+        var navEl = document.createElement('div');
+        navEl.className = 'imac-nav';
+        var numToken = 0;
+
+        function scrollScreenTo(top) {
+          if (screenEl._cancelDemo) screenEl._cancelDemo();
+          var token = ++numToken;
+          var from = screenEl.scrollTop;
+          var diff = top - from;
+          if (reducedMotion || Math.abs(diff) < 2) {
+            screenEl.scrollTop = top;
+            return;
+          }
+          var done = false;
+          var start;
+          function step(ts) {
+            if (token !== numToken) return;
+            if (start === undefined) start = ts;
+            var t = Math.min((ts - start) / 700, 1);
+            screenEl.scrollTop = from + diff * easeInOutCubic(t);
+            if (t < 1) requestAnimationFrame(step);
+            else done = true;
+          }
+          requestAnimationFrame(step);
+          setTimeout(function () {
+            if (!done && token === numToken) screenEl.scrollTop = top;
+          }, 850);
+        }
+
+        var numButtons = imgs.map(function (img, i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'imac-num';
+          b.textContent = i + 1;
+          b.setAttribute('aria-label', 'Show mockup ' + (i + 1));
+          b.addEventListener('click', function () {
+            scrollScreenTo(Math.min(img.offsetTop, screenEl.scrollHeight - screenEl.clientHeight));
+          });
+          navEl.appendChild(b);
+          return b;
+        });
+
+        function updateNums() {
+          var pos = screenEl.scrollTop + screenEl.clientHeight * 0.35;
+          var active = 0;
+          imgs.forEach(function (img, i) {
+            if (img.offsetTop <= pos) active = i;
+          });
+          numButtons.forEach(function (b, i) {
+            b.classList.toggle('active', i === active);
+          });
+        }
+        screenEl.addEventListener('scroll', updateNums, { passive: true });
+        updateNums();
+
+        imac.appendChild(navEl);
+      });
+
+      if (!reducedMotion) {
+        var demoObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !entry.target.dataset.demoed) {
+              entry.target.dataset.demoed = '1';
+              var screenEl = entry.target.querySelector('.imac-screen');
+              setTimeout(function () { playDemo(screenEl); }, 700);
+              demoObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.55 });
+
+        document.querySelectorAll('.imac').forEach(function (imac) {
+          demoObserver.observe(imac);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

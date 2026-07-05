@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Roman Leinwather</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial,sans-serif' font-size='26' font-weight='600' fill='%23f9f9f9' text-anchor='middle'%3ERL%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    /* apply saved theme before first paint to avoid a flash */
+    try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f9f9f9;
+      --text: #000000;
+      --muted: #666666;
+      --faint: #999999;
+      --nav-bg: rgba(255, 255, 255, 0.75);
+      --line: #c9c9c9;
+      --toggle-track: #e4e4e4;
+      --toggle-knob: #ffffff;
+      --toggle-icon: #666666;
+    }
+
+    :root.dark {
+      --bg: #111111;
+      --text: #f5f5f5;
+      --muted: #a3a3a3;
+      --faint: #6e6e6e;
+      --nav-bg: rgba(17, 17, 17, 0.75);
+      --line: #4d4d4d;
+      --toggle-track: #3f3f3f;
+      --toggle-knob: #161616;
+      --toggle-icon: #e0e0e0;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Instrument Sans', sans-serif;
+      font-variation-settings: "wdth" 100;
+      font-weight: 400;
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: 112px;
+      padding-right: 112px;
+    }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-top: 32px;
+      padding-bottom: 16px;
+      z-index: 10;
+      background: transparent;
+      transition:
+        background-color 0.35s ease,
+        padding 0.35s ease,
+        backdrop-filter 0.35s ease;
+    }
+
+    .nav.scrolled {
+      padding-top: 16px;
+      background: var(--nav-bg);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.25s ease, color 0.4s ease;
+    }
+
+    .nav a:hover {
+      opacity: 0.5;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    /* ---------- SHARED TYPE ---------- */
+    .eyebrow {
+      font-size: 14px;
+      line-height: normal;
+      color: var(--faint);
+      width: 100%;
+      transition: color 0.4s ease;
+    }
+
+    .heading {
+      font-size: 28px;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      width: 100%;
+      transition: color 0.4s ease;
+    }
+
+    .heading .muted {
+      color: var(--muted);
+    }
+
+    .body-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 720px;
+      transition: color 0.4s ease;
+    }
+
+    /* ---------- THEME TOGGLE ---------- */
+    .theme-toggle {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      border: none;
+      padding: 0;
+      background: var(--toggle-track);
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--toggle-knob);
+      color: var(--toggle-icon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease;
+    }
+
+    :root.dark .toggle-knob {
+      transform: translateX(20px);
+    }
+
+    .toggle-knob svg {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      transition: opacity 0.25s ease, transform 0.3s ease;
+    }
+
+    .icon-moon {
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+
+    :root.dark .icon-sun {
+      opacity: 0;
+      transform: rotate(45deg);
+    }
+
+    :root.dark .icon-moon {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---------- CV LAYOUT ---------- */
+    .cv {
+      padding-top: 176px;
+      padding-bottom: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .cv-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .cv-role-title {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+
+    .cv-contact {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .cv-contact a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .cv-contact a:hover {
+      color: var(--text);
+    }
+
+    .cv-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .cv-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .cv-item + .cv-item {
+      margin-top: 16px;
+    }
+
+    .cv-item-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .cv-item-title {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text);
+      transition: color 0.4s ease;
+    }
+
+    .cv-item-years {
+      font-size: 14px;
+      color: var(--faint);
+      white-space: nowrap;
+      transition: color 0.4s ease;
+    }
+
+    .cv-item-role {
+      font-size: 14px;
+      color: var(--faint);
+      transition: color 0.4s ease;
+    }
+
+    .cv-item ul {
+      margin-top: 8px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cv-item li {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+
+    .cv-item li a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .cv-item li a:hover {
+      color: var(--text);
+    }
+
+    .project-link {
+      color: var(--text) !important;
+      transition: opacity 0.25s ease, color 0.4s ease !important;
+    }
+
+    .project-link:hover {
+      opacity: 0.6;
+    }
+
+    /* skills: grouped categories, scannable for recruiters and ATS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .skills-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skills-group-title {
+      font-size: 14px;
+      color: var(--faint);
+      transition: color 0.4s ease;
+    }
+
+    .skills-group ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .skills-group li {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+
+    .footer-note {
+      padding-top: 40px;
+      font-size: 14px;
+      color: var(--faint);
+      transition: color 0.4s ease;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--d, 0s);
+      will-change: opacity, transform;
+    }
+
+    [data-reveal].in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .container {
+        padding-left: 64px;
+        padding-right: 64px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+
+      .cv-item-head {
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* ---------- DOWNLOAD LINK ---------- */
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.25s ease, color 0.4s ease;
+    }
+
+    .cv-download:hover {
+      opacity: 0.6;
+    }
+
+    .cv-download svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* ---------- PRINT / PDF ---------- */
+    @media print {
+      :root,
+      :root.dark {
+        --bg: #ffffff;
+        --text: #000000;
+        --muted: #444444;
+        --faint: #888888;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      .nav,
+      .cv-download {
+        display: none !important;
+      }
+
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .cv {
+        padding-top: 0;
+        padding-bottom: 0;
+        gap: 18px;
+      }
+
+      .container {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: none;
+      }
+
+      .cv-header {
+        gap: 2px;
+      }
+
+      .cv-section {
+        gap: 8px;
+      }
+
+      .heading {
+        font-size: 19px;
+        letter-spacing: -0.3px;
+      }
+
+      .cv-role-title,
+      .cv-item-title {
+        font-size: 11px;
+      }
+
+      .eyebrow,
+      .cv-item-years,
+      .cv-item-role,
+      .skills-group-title {
+        font-size: 9px;
+      }
+
+      .body-text,
+      .cv-contact,
+      .cv-item li,
+      .skills-group li {
+        font-size: 10.5px;
+        line-height: 1.45;
+      }
+
+      .body-text,
+      .cv-item,
+      .skills-grid {
+        max-width: none;
+      }
+
+      .cv-contact {
+        padding-top: 2px;
+        gap: 14px;
+      }
+
+      .cv-item + .cv-item {
+        margin-top: 7px;
+      }
+
+      .cv-item ul {
+        margin-top: 3px;
+        gap: 1px;
+        padding-left: 14px;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .skills-group {
+        gap: 3px;
+      }
+
+      .skills-group ul {
+        gap: 1px;
+      }
+
+      .footer-note {
+        padding-top: 10px;
+        font-size: 9px;
+      }
+
+      .cv-item,
+      .skills-group {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html">Roman Leinwather</a>
+      <div class="nav-links">
+        <a href="index.html#about">About</a>
+        <a href="index.html#portfolio">Portfolio</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="cv.html">CV</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <span class="toggle-knob">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container cv">
+
+    <!-- HEADER -->
+    <header class="cv-header">
+      <p class="eyebrow" data-reveal>Curriculum Vitae</p>
+      <h1 class="heading" data-reveal>Roman Leinwather</h1>
+      <p class="cv-role-title" data-reveal>Senior Product Designer</p>
+      <div class="cv-contact" data-reveal>
+        <span>Prague, Czech Republic</span>
+        <a href="tel:+420720389850">+420 720 389 850</a>
+        <a href="mailto:roman.leinwather@gmail.com">roman.leinwather@gmail.com</a>
+        <a href="https://www.linkedin.com/in/lewro/" target="_blank" rel="noopener">linkedin.com/in/lewro</a>
+      </div>
+      <a class="cv-download" href="assets/roman-leinwather-cv.pdf" download="Roman-Leinwather-CV.pdf" data-reveal>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
+        Download PDF
+      </a>
+    </header>
+
+    <!-- SUMMARY -->
+    <section class="cv-section">
+      <p class="eyebrow" data-reveal>Professional Summary</p>
+      <p class="body-text" data-reveal>Senior Product Designer with 20 years of experience delivering user-centered digital products for global brands including Google, Toptal, NATO, and Est&eacute;e Lauder. Ranked in the top 3% of design talent on Toptal. Expert in UX/UI design, prototyping, usability testing, and conversion optimization, combining hands-on front-end development skills (HTML, CSS, JavaScript) with recent experience designing and shipping AI-enhanced products. Proficient in Figma, Sketch, and Adobe Creative Suite.</p>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section class="cv-section">
+      <p class="eyebrow" data-reveal>Work Experience</p>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Toptal</p>
+          <p class="cv-item-years">2019&ndash;Present</p>
+        </div>
+        <p class="cv-item-role">Product Designer</p>
+        <ul>
+          <li>Led growth-focused design initiatives across Toptal&rsquo;s digital platforms, driving user acquisition and engagement</li>
+          <li>Redesigned and optimized the signup flow, increasing sign-up conversion rates</li>
+          <li>Collaborated cross-functionally with marketing teams and content strategists to deliver cohesive brand experiences across all digital touchpoints</li>
+          <li>Planned and conducted usability testing sessions and translated findings into actionable design improvements</li>
+          <li>Built interactive Figma prototypes to validate concepts early and accelerate stakeholder feedback cycles</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Freelancer</p>
+          <p class="cv-item-years">2011&ndash;2019</p>
+        </div>
+        <p class="cv-item-role">Product Designer / Front-End Developer</p>
+        <ul>
+          <li>Ranked within the top 3% of design talent on the Toptal network for three consecutive years</li>
+          <li>Delivered end-to-end design projects for global clients including Google, NATO, AVG, Est&eacute;e Lauder, and Qustodio</li>
+          <li>Designed user interfaces and user experiences in Sketch and Figma, specializing in UI design, UX design, and product design for web and mobile</li>
+          <li>Managed complete project lifecycles independently, from discovery and wireframing to high-fidelity design and delivery</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Thrudigital</p>
+          <p class="cv-item-years">2009&ndash;2011</p>
+        </div>
+        <p class="cv-item-role">Designer</p>
+        <ul>
+          <li>Designed digital campaigns and websites for high-profile clients including 10 Downing Street, ITV, HSBC, and Amy Winehouse</li>
+          <li>Produced visual designs in Adobe Photoshop and implemented them in PHP, HTML, CSS, and JavaScript</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Sub TV</p>
+          <p class="cv-item-years">2008&ndash;2009</p>
+        </div>
+        <p class="cv-item-role">Web Designer</p>
+        <ul>
+          <li>Designed the Student&rsquo;s Book web portal serving university students across the United Kingdom</li>
+          <li>Developed the front end using ColdFusion, HTML, CSS, and JavaScript</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Dot Mobile &ndash; Vodafone</p>
+          <p class="cv-item-years">2007&ndash;2008</p>
+        </div>
+        <p class="cv-item-role">Web Designer</p>
+        <ul>
+          <li>Designed web applications, websites, and advertising campaigns in Adobe Photoshop and Adobe Illustrator</li>
+          <li>Built front-end code with HTML, CSS, and JavaScript</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="cv-section">
+      <p class="eyebrow" data-reveal>Projects</p>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Sport Betting Analyser</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <ul>
+          <li>Designed and built an AI-driven sports betting analyzer that predicts match outcomes by comparing live betting data against historical datasets</li>
+          <li><a class="project-link" href="https://closing-line.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Forex Trading Indicator and Algo Trading</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <ul>
+          <li>Designed and developed a custom forex trading indicator for TradingView and an algorithmic trading bot for the cTrader platform, built with the Claude AI model</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Czech and Slovak Discount Map</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <ul>
+          <li>Built a location-aware map application using the Claude AI model to surface discounted offers near the user</li>
+          <li><a class="project-link" href="https://slevy-poblizu-v1dt.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Czech Economic Pulse</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <ul>
+          <li>Designed and shipped a live macroeconomic dashboard aggregating 15 open-source data sources, powered by Claude AI models</li>
+          <li><a class="project-link" href="https://czech-businesses.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Awra</p>
+          <p class="cv-item-years">2025&ndash;Present</p>
+        </div>
+        <ul>
+          <li>Designed and developed Awra, a health and wellness mobile application for iOS and Android</li>
+          <li>Built the awra.info website on the Paperclip agent-driven framework, enabling automated content creation by AI agents</li>
+          <li><a class="project-link" href="https://awra.info" target="_blank" rel="noopener">Project link</a></li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Application Design Academy</p>
+          <p class="cv-item-years">2019&ndash;2020</p>
+        </div>
+        <ul>
+          <li>Created and published an 11-hour application design course on Udemy, covering web, mobile, and tablet design from zero to professional level</li>
+          <li><a class="project-link" href="https://www.udemy.com/course/from-zero-to-application-designer-web-mobile-tablet/?couponCode=KEEPLEARNING" target="_blank" rel="noopener">Project link</a></li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Local Experts</p>
+          <p class="cv-item-years">2018&ndash;2019</p>
+        </div>
+        <ul>
+          <li>Designed and developed a Czech online marketplace connecting clients with lawyers, accountants, and financial experts, built with PHP, HTML, CSS, and JavaScript</li>
+        </ul>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Getquantify</p>
+          <p class="cv-item-years">2017&ndash;2019</p>
+        </div>
+        <ul>
+          <li>Designed and developed a project management platform built on Ruby on Rails and AWS infrastructure (EC2, S3)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="cv-section">
+      <p class="eyebrow" data-reveal>Education</p>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">City University, London, United Kingdom</p>
+          <p class="cv-item-years">2009</p>
+        </div>
+        <p class="cv-item-role">Design</p>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Oxford Computer House, London, United Kingdom</p>
+          <p class="cv-item-years">2008</p>
+        </div>
+        <p class="cv-item-role">CIW in Design and Computer Programming</p>
+      </div>
+    </section>
+
+    <!-- CORE SKILLS -->
+    <section class="cv-section">
+      <p class="eyebrow" data-reveal>Core Skills</p>
+      <div class="skills-grid" data-reveal>
+        <div class="skills-group">
+          <p class="skills-group-title">Design</p>
+          <ul>
+            <li>Product Design</li>
+            <li>User Interface (UI) Design</li>
+            <li>User Experience (UX) Design</li>
+            <li>Interaction Design</li>
+            <li>Responsive Web Design</li>
+            <li>Wireframing</li>
+            <li>Prototyping</li>
+            <li>Usability Testing</li>
+            <li>Branding and Visual Identity</li>
+          </ul>
+        </div>
+        <div class="skills-group">
+          <p class="skills-group-title">Tools</p>
+          <ul>
+            <li>Figma</li>
+            <li>Sketch</li>
+            <li>Adobe Photoshop</li>
+            <li>Adobe Illustrator</li>
+          </ul>
+        </div>
+        <div class="skills-group">
+          <p class="skills-group-title">Development</p>
+          <ul>
+            <li>Front-End Development</li>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>PHP</li>
+            <li>Ruby on Rails</li>
+            <li>Python &ndash; Django</li>
+          </ul>
+        </div>
+        <div class="skills-group">
+          <p class="skills-group-title">AI</p>
+          <ul>
+            <li>AI Prompt Engineering</li>
+            <li>Claude AI</li>
+            <li>AI-Assisted Development</li>
+            <li>Paperclip</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">&copy; 2026 Roman Leinwather</p>
+
+  </main>
+
+  <script>
+    (function () {
+      /* ---------- Sticky nav: solid bar once scrolled ---------- */
+      var nav = document.querySelector('.nav');
+      function updateNav() {
+        nav.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 8);
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+
+      /* ---------- Dark mode toggle ---------- */
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        var dark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+
+      /* ---------- Reveal on scroll ---------- */
+      var reveals = document.querySelectorAll('[data-reveal]');
+      reveals.forEach(function (el, i) {
+        el.style.setProperty('--d', ((i % 6) * 0.06) + 's');
+      });
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+      reveals.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
