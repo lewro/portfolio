@@ -120,6 +120,30 @@
       align-items: center;
     }
 
+    /* ---------- MOBILE HAMBURGER ---------- */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.2s ease, background-color 0.4s ease;
+    }
+
     /* ---------- HERO / ABOUT ---------- */
     .screen {
       position: relative;
@@ -563,6 +587,50 @@
         flex: none;
         width: 100%;
       }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 32px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 16px;
+        padding: 20px 24px;
+        background: var(--nav-bg);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          background-color 0.4s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+
+      .nav-toggle.open span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.open span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -582,7 +650,12 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a href="#home">Roman Leinwather</a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
         <a href="#about">About</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#contact">Contact</a>
@@ -907,6 +980,27 @@
       document.getElementById('theme-toggle').addEventListener('click', function () {
         var dark = document.documentElement.classList.toggle('dark');
         try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+
+      /* ---------- Mobile hamburger menu ---------- */
+      var navToggle = document.getElementById('nav-toggle');
+      var navLinksEl = document.getElementById('nav-links');
+      function closeMenu() {
+        navLinksEl.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+      navToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = navLinksEl.classList.toggle('open');
+        navToggle.classList.toggle('open', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      navLinksEl.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('click', function (e) {
+        if (!navLinksEl.contains(e.target) && !navToggle.contains(e.target)) closeMenu();
       });
 
       /* ---------- Smooth jump links (JS-driven, works everywhere) ---------- */

@@ -110,6 +110,30 @@
       align-items: center;
     }
 
+    /* ---------- MOBILE HAMBURGER ---------- */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.2s ease, background-color 0.4s ease;
+    }
+
     /* ---------- SHARED TYPE ---------- */
     .eyebrow {
       font-size: 14px;
@@ -221,12 +245,17 @@
 
     .cv-contact {
       display: flex;
-      gap: 24px;
       flex-wrap: wrap;
       padding-top: 8px;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.5;
       color: var(--muted);
+    }
+
+    .cv-contact > * + *::before {
+      content: '\00B7';
+      margin: 0 10px;
+      color: var(--faint);
     }
 
     .cv-contact a {
@@ -320,6 +349,22 @@
       opacity: 0.6;
     }
 
+    /* compact projects: title + one-line description + inline link */
+    .cv-section--projects .cv-item + .cv-item {
+      margin-top: 8px;
+    }
+
+    .cv-item-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+
+    .cv-item-desc .project-link {
+      margin-left: 4px;
+    }
+
     /* skills: grouped categories, scannable for recruiters and ATS */
     .skills-grid {
       display: grid;
@@ -395,6 +440,59 @@
       .cv-item-head {
         flex-direction: column;
         gap: 2px;
+      }
+
+      .cv-contact {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .cv-contact > * + *::before {
+        content: none;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 32px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 16px;
+        padding: 20px 24px;
+        background: var(--nav-bg);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          background-color 0.4s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+
+      .nav-toggle.open span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.open span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
       }
     }
 
@@ -492,6 +590,7 @@
       .body-text,
       .cv-contact,
       .cv-item li,
+      .cv-item-desc,
       .skills-group li {
         font-size: 10.5px;
         line-height: 1.45;
@@ -505,7 +604,10 @@
 
       .cv-contact {
         padding-top: 2px;
-        gap: 14px;
+      }
+
+      .cv-contact > * + *::before {
+        margin: 0 6px;
       }
 
       .cv-item + .cv-item {
@@ -549,7 +651,12 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html">Roman Leinwather</a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
         <a href="index.html#about">About</a>
         <a href="index.html#portfolio">Portfolio</a>
         <a href="index.html#contact">Contact</a>
@@ -660,39 +767,15 @@
     </section>
 
     <!-- PROJECTS -->
-    <section class="cv-section">
+    <section class="cv-section cv-section--projects">
       <p class="eyebrow" data-reveal>Projects</p>
-
-      <div class="cv-item" data-reveal>
-        <div class="cv-item-head">
-          <p class="cv-item-title">Sport Betting Analyser</p>
-          <p class="cv-item-years">2026&ndash;Present</p>
-        </div>
-        <ul>
-          <li>Designed and built an AI-driven sports betting analyzer that predicts match outcomes by comparing live betting data against historical datasets</li>
-          <li><a class="project-link" href="https://closing-line.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
-      </div>
-
-      <div class="cv-item" data-reveal>
-        <div class="cv-item-head">
-          <p class="cv-item-title">Forex Trading Indicator and Algo Trading</p>
-          <p class="cv-item-years">2026&ndash;Present</p>
-        </div>
-        <ul>
-          <li>Designed and developed a custom forex trading indicator for TradingView and an algorithmic trading bot for the cTrader platform, built with the Claude AI model</li>
-        </ul>
-      </div>
 
       <div class="cv-item" data-reveal>
         <div class="cv-item-head">
           <p class="cv-item-title">Czech and Slovak Discount Map</p>
           <p class="cv-item-years">2026&ndash;Present</p>
         </div>
-        <ul>
-          <li>Built a location-aware map application using the Claude AI model to surface discounted offers near the user</li>
-          <li><a class="project-link" href="https://slevy-poblizu-v1dt.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
+        <p class="cv-item-desc">Location-aware map application built with the Claude AI model to surface discounted offers near the user. <a class="project-link" href="https://slevy-poblizu-v1dt.vercel.app/" target="_blank" rel="noopener">Project link</a></p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -700,10 +783,7 @@
           <p class="cv-item-title">Czech Economic Pulse</p>
           <p class="cv-item-years">2026&ndash;Present</p>
         </div>
-        <ul>
-          <li>Designed and shipped a live macroeconomic dashboard aggregating 15 open-source data sources, powered by Claude AI models</li>
-          <li><a class="project-link" href="https://czech-businesses.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
+        <p class="cv-item-desc">Live macroeconomic dashboard aggregating 15 open-source data sources, powered by Claude AI models. <a class="project-link" href="https://czech-businesses.vercel.app/" target="_blank" rel="noopener">Project link</a></p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -711,10 +791,7 @@
           <p class="cv-item-title">Czech Traffic</p>
           <p class="cv-item-years">2026&ndash;Present</p>
         </div>
-        <ul>
-          <li>Designed and built a live Prague public-transport dispatcher map that plots every tram, metro, bus, train, and ferry in real time, with a delay-zone heatmap and installable PWA for iOS and Android</li>
-          <li><a class="project-link" href="https://czech-traffic.vercel.app/" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
+        <p class="cv-item-desc">Live Prague public-transport dispatcher map plotting every tram, metro, bus, train, and ferry in real time, with a delay-zone heatmap and installable PWA. <a class="project-link" href="https://czech-traffic.vercel.app/" target="_blank" rel="noopener">Project link</a></p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -722,11 +799,7 @@
           <p class="cv-item-title">Awra</p>
           <p class="cv-item-years">2025&ndash;Present</p>
         </div>
-        <ul>
-          <li>Designed and developed Awra, a health and wellness mobile application for iOS and Android</li>
-          <li>Built the awra.info website on the Paperclip agent-driven framework, enabling automated content creation by AI agents</li>
-          <li><a class="project-link" href="https://awra.info" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
+        <p class="cv-item-desc">Health and wellness mobile app for iOS and Android, with a website built on the Paperclip agent-driven framework for automated content creation. <a class="project-link" href="https://awra.info" target="_blank" rel="noopener">Project link</a></p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -734,10 +807,7 @@
           <p class="cv-item-title">Application Design Academy</p>
           <p class="cv-item-years">2019&ndash;2020</p>
         </div>
-        <ul>
-          <li>Created and published an 11-hour application design course on Udemy, covering web, mobile, and tablet design from zero to professional level</li>
-          <li><a class="project-link" href="https://www.udemy.com/course/from-zero-to-application-designer-web-mobile-tablet/?couponCode=KEEPLEARNING" target="_blank" rel="noopener">Project link</a></li>
-        </ul>
+        <p class="cv-item-desc">11-hour application design course on Udemy covering web, mobile, and tablet design from zero to professional level. <a class="project-link" href="https://www.udemy.com/course/from-zero-to-application-designer-web-mobile-tablet/?couponCode=KEEPLEARNING" target="_blank" rel="noopener">Project link</a></p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -745,9 +815,7 @@
           <p class="cv-item-title">Local Experts</p>
           <p class="cv-item-years">2018&ndash;2019</p>
         </div>
-        <ul>
-          <li>Designed and developed a Czech online marketplace connecting clients with lawyers, accountants, and financial experts, built with PHP, HTML, CSS, and JavaScript</li>
-        </ul>
+        <p class="cv-item-desc">Czech online marketplace connecting clients with lawyers, accountants, and financial experts, built with PHP, HTML, CSS, and JavaScript.</p>
       </div>
 
       <div class="cv-item" data-reveal>
@@ -755,9 +823,23 @@
           <p class="cv-item-title">Getquantify</p>
           <p class="cv-item-years">2017&ndash;2019</p>
         </div>
-        <ul>
-          <li>Designed and developed a project management platform built on Ruby on Rails and AWS infrastructure (EC2, S3)</li>
-        </ul>
+        <p class="cv-item-desc">Project management platform built on Ruby on Rails and AWS infrastructure (EC2, S3).</p>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Sport Betting Analyser</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <p class="cv-item-desc">AI-driven sports betting analyzer predicting match outcomes by comparing live betting data against historical datasets. <a class="project-link" href="https://closing-line.vercel.app/" target="_blank" rel="noopener">Project link</a></p>
+      </div>
+
+      <div class="cv-item" data-reveal>
+        <div class="cv-item-head">
+          <p class="cv-item-title">Forex Trading Indicator and Algo Trading</p>
+          <p class="cv-item-years">2026&ndash;Present</p>
+        </div>
+        <p class="cv-item-desc">Custom forex trading indicator for TradingView and an algorithmic trading bot for the cTrader platform, built with the Claude AI model.</p>
       </div>
     </section>
 
@@ -851,6 +933,27 @@
       document.getElementById('theme-toggle').addEventListener('click', function () {
         var dark = document.documentElement.classList.toggle('dark');
         try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+
+      /* ---------- Mobile hamburger menu ---------- */
+      var navToggle = document.getElementById('nav-toggle');
+      var navLinksEl = document.getElementById('nav-links');
+      function closeMenu() {
+        navLinksEl.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+      navToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = navLinksEl.classList.toggle('open');
+        navToggle.classList.toggle('open', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      navLinksEl.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('click', function (e) {
+        if (!navLinksEl.contains(e.target) && !navToggle.contains(e.target)) closeMenu();
       });
 
       /* ---------- Reveal on scroll ---------- */
