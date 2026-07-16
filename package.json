@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static portfolio site for romanleinwather.cz (served on Vercel). middleware.js gates the whole site behind a password (env var SITE_PASSWORD).",
+  "dependencies": {
+    "@vercel/functions": "3.7.5"
+  }
+}

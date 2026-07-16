@@ -1,0 +1,10 @@
+# Vercel
+.vercel
+# Node
+node_modules
+# Local env
+.env
+.env.*
+!.env.example
+# macOS
+.DS_Store
